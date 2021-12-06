@@ -1,5 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 from re import findall
+import os
 
 DARK = (181, 136, 99)
 LIGHT = (240, 217, 181)
@@ -12,7 +13,7 @@ LASTMOVE_DARK = (170, 162, 58)
 ALPHABET = list("abcdefghijklmnopqrstuvwxyz")
 SQ_SIZE = 100
 
-FONT_LOCATION = r'C:\Windows\Fonts\ARLRDBD.ttf'
+FONT_LOCATION = os.getenv('FONT_LOCATION')
 
 
 class DrawBoard:
@@ -48,7 +49,7 @@ class DrawBoard:
             colour = "b"
         else:
             colour = "w"
-        return Image.open(f'assets\\{folder}\\{colour}{piece}.png').convert('RGBA')
+        return Image.open(os.path.join('assets', folder, f'{colour}{piece.upper()}.png')).convert('RGBA')
 
     def fen_to_array(self, fen, upside_down):
         output = [self.flatten([[""]*int(i) if i.isnumeric() else i for i in rank]) for rank in [findall('(\d+|\+?[a-zA-Z])', i) for i in fen.split(' ')[0].split('[')[0].split('/')]]
@@ -108,7 +109,7 @@ class DrawBoard:
                 drw.rectangle([SQ_SIZE*(i+1) - border, 0, SQ_SIZE*(i+1) + border, b_height*SQ_SIZE], fill=BLACK)                        
 
         else: # custom image
-            board = Image.open(f'assets\\{self.folder}\\board.png')
+            board = Image.open(os.path.join('assets', self.folder, 'board.png'))
             if self.upside_down:
                 board = board.rotate(180)
             img.paste(board, (0, 0))
