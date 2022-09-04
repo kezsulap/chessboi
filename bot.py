@@ -22,7 +22,7 @@ ENGINE_LOCATION = os.getenv('ENGINE_LOCATION')
 VARIANTS_LOCATION = os.getenv('VARIANTS_LOCATION')
 BOT_ID = int(os.getenv('BOT_ID'))
 
-client = discord.Client(activity=discord.Game(name='--help'))
+client = discord.Client(activity=discord.Game(name='--help'), intents=discord.Intents(messages=True, guilds=True, message_content=True))
 games_dict = {}
 allowed_variants = Game.variants_list()
 
@@ -154,7 +154,8 @@ async def display_clip(message, game_object):
 
 @client.event
 async def on_ready():
-	guilds = await client.fetch_guilds(limit=150).flatten()
+	guilds = [guild async for guild in client.fetch_guilds(limit=150)]
+	# await client.fetch_guilds(limit=150).flatten()
 	print(f"{client.user} is connected to the following guilds:")
 	for guild in guilds:
 		print(f"{guild.name} [{guild.id}]")
@@ -166,6 +167,7 @@ async def on_message(message):
 	message_text = str(message.content)
 	username = str(message.author)
 	game = games_dict.get(message.channel.id, None)
+	print(f'{message_text = } {message = }')
 
 	# Display the following help message
 	if message_text == '--help':

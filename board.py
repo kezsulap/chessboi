@@ -1,5 +1,6 @@
 import PIL.Image, PIL.ImageDraw, PIL.ImageFont
 from re import findall
+import os
 
 DARK = (181, 136, 99)
 LIGHT = (240, 217, 181)
@@ -15,7 +16,7 @@ SQ_SIZE = 100
 
 IMGS_LOCATION = "graphics"
 
-FONT_LOCATION = r'C:\Windows\Fonts\ARLRDBD.ttf'
+FONT_LOCATION = os.getenv('FONT_LOCATION');
 
 
 class DrawBoard:
@@ -54,9 +55,9 @@ class DrawBoard:
 			colour = "w"
 
 		try:
-			return PIL.Image.open(f'graphics\\{self.folder}\\{colour}{piece}.png').convert('RGBA')
-		except:
-			return PIL.Image.open(f'graphics\\fail.png').convert('RGBA')
+			return PIL.Image.open(os.path.join('graphics', self.folder, f'{colour}{piece.upper()}.png')).convert('RGBA')
+		except FileNotFoundError:
+			return PIL.Image.open(os.path.join('graphics', 'fail.png')).convert('RGBA')
 
 	def fen_to_array(self):
 		fen_array = [findall('(\d+|\+?[a-zA-Z]\~?)', i) for i in self.fen.split(' ')[0].split('[')[0].split('/')]
@@ -126,7 +127,7 @@ class DrawBoard:
 				drw.rectangle([SQ_SIZE*(i+1) - border, 0, SQ_SIZE*(i+1) + border, b_height*SQ_SIZE], fill=BLACK)
 
 		else: # custom image
-			board = PIL.Image.open(f'graphics\\{self.folder}\\board.png')
+			board = PIL.Image.open(os.path.join('graphics', self.folder, 'board.png'))
 			if self.upside_down:
 				board = board.rotate(180)
 			img.paste(board, (0, 0))
