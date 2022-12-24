@@ -92,7 +92,7 @@ async def game_over(message, result):
 			  f"\n*(Game lasted {game.age_minutes()} minutes.)*")
 
 	await message.channel.send(output)
-	await display_clip(message, game)
+	# await display_clip(message, game)
 
 	return
 
@@ -594,6 +594,8 @@ async def on_message(message):
 
 	# Create a clip
 	if message_text == '--clip':
+		await message.channel.send("Clip command is temporarily disabled")
+		return
 		if not (game and game.active):
 			await message.channel.send("No game is active.")
 			return
