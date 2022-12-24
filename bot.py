@@ -20,6 +20,8 @@ BOT_NAME = os.getenv('BOT_NAME')
 ADMIN_NAME = os.getenv('ADMIN_NAME')
 ENGINE_LOCATION = os.getenv('ENGINE_LOCATION')
 VARIANTS_LOCATION = os.getenv('VARIANTS_LOCATION')
+print(f'VARIANTS_LOCATION = {VARIANTS_LOCATION}')
+print(os.listdir())
 BOT_ID = int(os.getenv('BOT_ID'))
 
 client = discord.Client(activity=discord.Game(name='--help'), intents=discord.Intents(messages=True, guilds=True, message_content=True))
