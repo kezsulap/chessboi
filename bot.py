@@ -167,7 +167,6 @@ async def on_message(message):
 	message_text = str(message.content)
 	username = str(message.author)
 	game = games_dict.get(message.channel.id, None)
-	print(f'{message_text = } {message = }')
 
 	# Display the following help message
 	if message_text == '--help':
