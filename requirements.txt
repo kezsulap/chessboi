@@ -1,0 +1,6 @@
+discord==1.7.3
+pyffish
+tinydb
+python-dotenv
+opencv-python
+pillow
