@@ -141,13 +141,13 @@ async def bot_makes_move(message):
 
 
 async def display_board(message, game_object):
-	img_name = "imgs\\board_" + str(message.channel.id) + '.png'
+	img_name = os.path.join('imgs', f'board_{message.channel.id}.png')
 	await message.channel.send(file=discord.File(game_object.render(img_name)))
 	return
 
 
 async def display_clip(message, game_object):
-	clip_name = "imgs\\clip_" + str(message.channel.id) + '.mp4'
+	clip_name = os.path.join('imgs', f'clip_{message.channel.id}.mp4')
 	await message.channel.send(file=discord.File(game_object.render_clip(clip_name)))
 	return
 
