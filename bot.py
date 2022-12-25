@@ -255,7 +255,9 @@ async def on_message(message):
 		except:
 			await message.channel.send("Opponent not found.")
 			return
-
+		if opponent == BOT_NAME:
+			await message.channel.send("Engine play not supported atm")
+			return
 		# Validate variant
 		variant = message_text.split()[1]
 		if variant not in allowed_variants:

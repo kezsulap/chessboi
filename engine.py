@@ -5,6 +5,7 @@ import os
 
 class Engine:
 	def __init__(self, location, variants_file, variant, skill=20):
+		raise ValueError('Engine selfplay disabled')
 		self.engine = subprocess.Popen(
 			location,
 			universal_newlines=True,
